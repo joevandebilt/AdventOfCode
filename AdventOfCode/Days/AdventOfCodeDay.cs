@@ -1,17 +1,19 @@
 ﻿
-namespace AdventOfCode.Day;
-public abstract class AdventOfCodeDay
+using System.Reflection;
+
+namespace AdventOfCode.Days;
+public partial class AdventOfCodeDay
 {
-    protected int Part1Result;
-    protected int Part2Result;
+    protected double Part1Result;
+    protected double Part2Result;
 
     private readonly int _dayOfAdvent;
     private readonly bool _debugMode;
 
-    public AdventOfCodeDay(int day, bool debugMode)
+    public AdventOfCodeDay(int dayOfAdvent, bool debugMode)
     {
-        _dayOfAdvent = day;
-        _debugMode = debugMode;
+        _dayOfAdvent = dayOfAdvent;
+        _debugMode = debugMode;        
     }
 
     public virtual Task Run()
@@ -28,7 +30,7 @@ public abstract class AdventOfCodeDay
 
     protected string GetCurrentFilePath()
     {
-        return Path.Combine(Environment.CurrentDirectory, "Day", _dayOfAdvent.ToString());
+        return Path.Combine(Environment.CurrentDirectory, "Days", _dayOfAdvent.ToString());
     }
 
     protected async Task<List<string>> LoadFile()

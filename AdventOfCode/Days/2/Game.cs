@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Day.DayTwo;
+﻿namespace AdventOfCode.Days.DayTwo;
 
 public record Game
 {

@@ -1,4 +1,8 @@
-﻿namespace AdventOfCode.Day.DayOne;
+﻿
+using AdventOfCode.Enums;
+
+namespace AdventOfCode.Days.DayOne;
+
 public class DayOneMain : AdventOfCodeDay
 {
     private const int _day = 1;
@@ -15,7 +19,7 @@ public class DayOneMain : AdventOfCodeDay
             Dictionary<int, int> indexedValues = new();
 
             int firstIndex, lastIndex;
-            foreach (var numberEnum in Enum.GetValues<DaysEnum>())
+            foreach (var numberEnum in Enum.GetValues<Day>())
             {
                 string numberName = numberEnum.ToString();
                 int numberValue = (int)numberEnum;

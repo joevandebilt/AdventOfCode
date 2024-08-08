@@ -1,6 +1,6 @@
-﻿namespace AdventOfCode.Day;
+﻿namespace AdventOfCode.Enums;
 
-public enum DaysEnum
+public enum Day
 {
     Zero = 0,
     One = 1,

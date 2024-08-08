@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AdventOfCode.Day.DayThree;
+namespace AdventOfCode.Days.DayThree;
 
 public class DayThreeMain : AdventOfCodeDay
 {

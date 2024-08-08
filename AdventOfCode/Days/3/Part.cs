@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Day.DayThree
+﻿namespace AdventOfCode.Days.DayThree
 {
     public record Part
     {
