@@ -25,8 +25,9 @@ public class DayFourMain : AdventOfCodeDay
 
             var numberParts = scratchParts.Last().Split('|');
             if (numberParts.Length != 2) throw new ArgumentOutOfRangeException("Numbers should be made of 2 parts");
-            scratchCard.WinningNumbers = numberParts.First().Split(' ').Where(f => !string.IsNullOrWhiteSpace(f)).Select(f => int.Parse(f.Trim())).ToList();
-            scratchCard.SelectedNumbers = numberParts.Last().Split(' ').Where(l => !string.IsNullOrWhiteSpace(l)).Select(l => int.Parse(l.Trim())).ToList();
+
+            scratchCard.WinningNumbers = numberParts.First().Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(f => int.Parse(f.Trim())).ToList();
+            scratchCard.SelectedNumbers = numberParts.Last().Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(l => int.Parse(l.Trim())).ToList();
 
             scratchcards.Add(scratchCard);
         }
@@ -35,7 +36,7 @@ public class DayFourMain : AdventOfCodeDay
         foreach (var originalCard in scratchcards)
         {
             bonusScratchcards.Add(originalCard);
-
+            
             var cards = bonusScratchcards.Where(s => s.CardNumber == originalCard.CardNumber).ToList();
             foreach (var card in cards)
             {
