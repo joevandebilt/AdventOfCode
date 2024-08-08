@@ -26,8 +26,8 @@ public class DayFourMain : AdventOfCodeDay
             var numberParts = scratchParts.Last().Split('|');
             if (numberParts.Length != 2) throw new ArgumentOutOfRangeException("Numbers should be made of 2 parts");
 
-            scratchCard.WinningNumbers = numberParts.First().Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(f => int.Parse(f.Trim())).ToList();
-            scratchCard.SelectedNumbers = numberParts.Last().Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(l => int.Parse(l.Trim())).ToList();
+            scratchCard.WinningNumbers = SplitNumbers(numberParts.First());
+            scratchCard.SelectedNumbers = SplitNumbers(numberParts.Last());
 
             scratchcards.Add(scratchCard);
         }
@@ -36,17 +36,16 @@ public class DayFourMain : AdventOfCodeDay
         foreach (var originalCard in scratchcards)
         {
             bonusScratchcards.Add(originalCard);
-            
-            var cards = bonusScratchcards.Where(s => s.CardNumber == originalCard.CardNumber).ToList();
-            foreach (var card in cards)
-            {
-                var correctPicks = card.CorrectPicks;
-                var bonusCards = Enumerable.Range(originalCard.CardNumber+1, correctPicks);
 
-                foreach (var bonusCardId in bonusCards)
-                {
-                    bonusScratchcards.Add(scratchcards.First(s => s.CardNumber == bonusCardId));
-                }
+            var cardIterations = bonusScratchcards.Count(s => s.CardNumber == originalCard.CardNumber);
+            var correctPicks = originalCard.CorrectPicks;
+            var bonusCardIds = Enumerable.Range(originalCard.CardNumber + 1, correctPicks);
+
+            foreach (var bonusCardId in bonusCardIds) 
+            {
+                var cardToClone = scratchcards.Single(s => s.CardNumber == bonusCardId);
+                var bonusCards = Enumerable.Range(0, cardIterations).Select(n => cardToClone with { }).ToList();
+                bonusScratchcards.AddRange(bonusCards);
             }
         }
 
@@ -54,5 +53,13 @@ public class DayFourMain : AdventOfCodeDay
 
         Part1Result = scratchcards.Sum(s => s.Points);
         Part2Result = bonusScratchcards.Count;
+    }
+
+    private List<int> SplitNumbers(string input)
+    {
+        return input
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(l => int.Parse(l.Trim()))
+            .ToList();
     }
 }
