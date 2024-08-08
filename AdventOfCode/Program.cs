@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode;
+﻿using AdventOfCode.Day;
+
+namespace AdventOfCode;
 
 public class Program
 {
