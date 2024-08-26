@@ -1,7 +1,7 @@
 ﻿using AdventOfCode.Days.DaySix;
 using AdventOfCode.Enums;
 
-namespace AdventOfCode.Days.Template;
+namespace AdventOfCode.Days.DaySix;
 public class Day6 : AdventOfCodeDay
 {
     private const bool _debugging = true;
