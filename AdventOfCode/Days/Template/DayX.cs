@@ -8,6 +8,8 @@ public class Day0 : AdventOfCodeDay
 
     public override async Task Run()
     {
+        //var linesOfInput = await LoadFile();
+
         SetResult1(-1);
         SetResult2(-1);
         await base.Run();
