@@ -5,7 +5,7 @@ namespace AdventOfCode.Days.DayFour;
 public class DayFourMain : AdventOfCodeDay
 {
     private const int _day = 4;
-    private const bool _debugging = true;
+    private const bool _debugging = false;
 
     public DayFourMain() : base(_day, _debugging) { }
     public override async Task Run()
