@@ -86,15 +86,12 @@ public class Day5 : AdventOfCodeDay
         var locationMap = Maps.First(map => map.DestinationType == MapType.Location);
         var lowRange = locationMap.Ranges.OrderBy(locationMap => locationMap.DestinationStart).First();
 
-        long seedLocation = long.MaxValue;
         long interval = 100000;
         long loc = lowRange.DestinationStart;
-
-        lowestLocation = long.MaxValue;
         while (Part2Result == 0)
         {
             WriteLine($"Testing Location {loc}");
-            seedLocation = InTraverseTree(loc, MapType.Location);
+            long seedLocation = InTraverseTree(loc, MapType.Location);
             if (seedLocation != long.MaxValue)
             {
                 if (interval == 1) Part2Result = loc; //Win condition

@@ -9,5 +9,6 @@ public class Day0 : AdventOfCodeDay
     {
         Part1Result = -1;
         Part2Result = -1;
+        await Task.CompletedTask;
     }
 }
