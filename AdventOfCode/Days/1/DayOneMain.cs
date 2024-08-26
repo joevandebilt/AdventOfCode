@@ -5,10 +5,9 @@ namespace AdventOfCode.Days.DayOne;
 
 public class DayOneMain : AdventOfCodeDay
 {
-    private const int _day = 1;
     private const bool _debugging = false;
 
-    public DayOneMain() : base(_day, _debugging) { }
+    public DayOneMain() : base(Day.One, _debugging) { }
     public override async Task Run()
     {
         var linesOfInput = await LoadFile();

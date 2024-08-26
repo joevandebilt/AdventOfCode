@@ -1,12 +1,12 @@
-﻿using System.Text.RegularExpressions;
+﻿using AdventOfCode.Enums;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Days.DayTwo;
 public class DayTwoMain : AdventOfCodeDay
 {
-    private const int _day = 2;
     private const bool _debugging = false;
 
-    public DayTwoMain() : base(_day, _debugging) { }
+    public DayTwoMain() : base(Day.Two, _debugging) { }
     public override async Task Run()
     {
 

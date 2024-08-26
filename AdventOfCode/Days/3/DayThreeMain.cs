@@ -1,13 +1,13 @@
-﻿using System.Text.RegularExpressions;
+﻿using AdventOfCode.Enums;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Days.DayThree;
 
 public class DayThreeMain : AdventOfCodeDay
 {
-    private const int _day = 3;
     private const bool _debugging = false;
 
-    public DayThreeMain() : base(_day, _debugging) { }
+    public DayThreeMain() : base(Day.Three, _debugging) { }
     public override async Task Run()
     {
         var linesOfInput = await LoadFile();

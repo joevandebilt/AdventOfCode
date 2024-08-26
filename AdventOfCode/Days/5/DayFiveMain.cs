@@ -3,9 +3,8 @@
 namespace AdventOfCode.Days.DayFive;
 public class Day5 : AdventOfCodeDay
 {
-    private const int _day = 5;
     private const bool _debugging = false;
-    public Day5() : base(_day, _debugging) { }
+    public Day5() : base(Day.Five, _debugging) { }
 
     private List<Map> Maps = new();
     public override async Task Run()

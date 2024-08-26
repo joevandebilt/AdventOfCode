@@ -1,4 +1,5 @@
 ﻿
+using AdventOfCode.Enums;
 using System.Reflection;
 
 namespace AdventOfCode.Days;
@@ -10,9 +11,9 @@ public partial class AdventOfCodeDay
     private readonly int _dayOfAdvent;
     private readonly bool _debugMode;
 
-    public AdventOfCodeDay(int dayOfAdvent, bool debugMode)
+    public AdventOfCodeDay(Day dayOfAdvent, bool debugMode)
     {
-        _dayOfAdvent = dayOfAdvent;
+        _dayOfAdvent = (int)dayOfAdvent;
         _debugMode = debugMode;        
     }
 

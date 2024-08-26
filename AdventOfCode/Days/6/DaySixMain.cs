@@ -1,10 +1,10 @@
 ﻿using AdventOfCode.Enums;
 
 namespace AdventOfCode.Days.Template;
-public class Day0 : AdventOfCodeDay
+public class Day6 : AdventOfCodeDay
 {
-    private const bool _debugging = false;
-    public Day0() : base(Day.Zero, _debugging) { }
+    private const bool _debugging = true;
+    public Day6() : base(Day.Six, _debugging) { }
 
     public override async Task Run()
     {
