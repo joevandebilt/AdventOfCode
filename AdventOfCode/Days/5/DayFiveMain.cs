@@ -64,7 +64,7 @@ public class Day5 : AdventOfCodeDay
                 WriteLine($"Break Seed {seed}");
             }
         }
-        Part1Result = lowestLocation;
+        SetResult1(lowestLocation);
 
         var seedMap = new Map
         {
@@ -87,13 +87,18 @@ public class Day5 : AdventOfCodeDay
 
         long interval = 100000;
         long loc = lowRange.DestinationStart;
-        while (Part2Result == 0)
+        while (interval > 0)
         {
             WriteLine($"Testing Location {loc}");
             long seedLocation = InTraverseTree(loc, MapType.Location);
             if (seedLocation != long.MaxValue)
             {
-                if (interval == 1) Part2Result = loc; //Win condition
+                if (interval == 1)
+                {
+                    //Win condition
+                    SetResult2(loc);
+                    interval = -1;
+                }
 
                 //Valid seedmap
                 WriteLine($"Location {loc} maps to Seed {seedLocation}");
@@ -108,6 +113,8 @@ public class Day5 : AdventOfCodeDay
                 loc = loc + interval;
             }
         }
+
+        await base.Run();
     }
 
     private long TraverseTree(long input, MapType sourceType)

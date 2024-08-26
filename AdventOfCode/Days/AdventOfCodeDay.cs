@@ -1,12 +1,15 @@
 ﻿
 using AdventOfCode.Enums;
-using System.Reflection;
 
 namespace AdventOfCode.Days;
 public partial class AdventOfCodeDay
 {
-    protected double Part1Result;
-    protected double Part2Result;
+    private DateTime init;
+    private DateTime part1TimeResult;
+    private DateTime part2TimeResult;
+
+    private double part1Result;
+    private double part2Result;
 
     private readonly int _dayOfAdvent;
     private readonly bool _debugMode;
@@ -15,18 +18,30 @@ public partial class AdventOfCodeDay
     {
         _dayOfAdvent = (int)dayOfAdvent;
         _debugMode = debugMode;        
+        init = DateTime.Now;
     }
 
-    public virtual Task Run()
+    public virtual async Task Run()
     {
-        Console.WriteLine("You should override this base method you dingus");
-        throw new NotImplementedException("Override this method");
+        Console.WriteLine($"Day {_dayOfAdvent} Completed");
+        await Task.CompletedTask;
     }
-    public Task PrintResult()
+    public async Task PrintResult()
     {
-        Console.WriteLine($"Day {_dayOfAdvent} Part 1 Result:\t{Part1Result}");
-        Console.WriteLine($"Day {_dayOfAdvent} Part 2 Result:\t{Part2Result}");
-        return Task.CompletedTask;
+        Console.WriteLine($"Day {_dayOfAdvent} Part 1 Result:\t{part1Result} ({part1TimeResult.Subtract(init).TotalMilliseconds}ms)");
+        Console.WriteLine($"Day {_dayOfAdvent} Part 2 Result:\t{part2Result} ({part2TimeResult.Subtract(init).TotalMilliseconds}ms)");
+        await Task.CompletedTask;
+    }
+
+    protected void SetResult1(double result)
+    {
+        part1Result = result;
+        part1TimeResult = DateTime.Now;
+    }
+    protected void SetResult2(double result)
+    {
+        part2Result = result;
+        part2TimeResult = DateTime.Now;
     }
 
     protected string GetCurrentFilePath()

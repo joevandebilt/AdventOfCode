@@ -8,8 +8,8 @@ public class Day0 : AdventOfCodeDay
 
     public override async Task Run()
     {
-        Part1Result = -1;
-        Part2Result = -1;
-        await Task.CompletedTask;
+        SetResult1(-1);
+        SetResult2(-1);
+        await base.Run();
     }
 }

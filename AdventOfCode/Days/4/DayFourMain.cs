@@ -51,8 +51,10 @@ public class DayFourMain : AdventOfCodeDay
 
         WriteLine($"This cheeky bugger played {scratchcards.Count} scratchers");
 
-        Part1Result = scratchcards.Sum(s => s.Points);
-        Part2Result = bonusScratchcards.Count;
+        SetResult1(scratchcards.Sum(s => s.Points));
+        SetResult2(bonusScratchcards.Count);
+
+        await base.Run();
     }
 
     private List<int> SplitNumbers(string input)

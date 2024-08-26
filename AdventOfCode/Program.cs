@@ -13,6 +13,8 @@ public class Program
             .Where(t => t.IsSubclassOf(typeof(AdventOfCodeDay)) && !t.IsAbstract)
             .Select(t => (AdventOfCodeDay)Activator.CreateInstance(t)!).ToList();
 
+        Console.WriteLine($"Got {assemblies.Count} days to run code for");
+
         //Run the tasks
         tasks.AddRange(assemblies.Select(a => a.Run()));
         Task.WaitAll(tasks.ToArray());

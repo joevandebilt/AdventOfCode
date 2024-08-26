@@ -46,7 +46,9 @@ public class DayOneMain : AdventOfCodeDay
             p1calibrations.Add(int.Parse($"{firstNumericChar}{lastNumericChar}"));
             p2calibrations.Add(int.Parse($"{orderedValues.First().Value}{orderedValues.Last().Value}"));
         }
-        Part1Result = p1calibrations.Sum();
-        Part2Result = p2calibrations.Sum();
+        SetResult1(p1calibrations.Sum());
+        SetResult2(p2calibrations.Sum());
+
+        await base.Run();
     }
 }

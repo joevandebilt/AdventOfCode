@@ -57,7 +57,7 @@ public class DayThreeMain : AdventOfCodeDay
                 partNumbers.Add(part);
             }
         }
-        Part1Result = partNumbers.Where(p => p.Success).Sum(p => p.PartNumber);
+        SetResult1(partNumbers.Where(p => p.Success).Sum(p => p.PartNumber));
 
         int gearPower = 0;
         var itemsToCheck = partNumbers.Where(p => p.Positions.ContainsKey('*')).ToList();
@@ -73,7 +73,9 @@ public class DayThreeMain : AdventOfCodeDay
                 }
             }
         }
-        Part2Result = gearPower;
+        SetResult2(gearPower);
+
+        await base.Run();
     }
 
     private Part ScanLine(Part part, string line, int lineNumber, int start, int end)

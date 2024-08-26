@@ -59,7 +59,9 @@ public class DayTwoMain : AdventOfCodeDay
 
         var possibleGames = GamesPlayed.Where(g => g.Results.All(r => r.Red <= maxRed && r.Green <= maxGreen && r.Blue <= maxBlue)).ToList();
 
-        Part1Result = possibleGames.Sum(pg => pg.Id);
-        Part2Result = GamesPlayed.Sum(pg => pg.Power);
+        SetResult1(possibleGames.Sum(pg => pg.Id));
+        SetResult2(GamesPlayed.Sum(pg => pg.Power));
+
+        await base.Run();
     }
 }
