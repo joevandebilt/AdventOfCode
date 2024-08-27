@@ -104,33 +104,33 @@ public class Day8 : AdventOfCodeDay
         }
 
         //Now work out the lowest common factor I guess
-        long lowestCommonFactor = FactorsOfSet(traversePaths.Select(f => f.StepsToRepeat));
+        long lowestCommonMultiple = MultiplesOfSet(traversePaths.Select(f => f.StepsToRepeat));
 
-        SetResult2(lowestCommonFactor);
+        SetResult2(lowestCommonMultiple);
         await base.Run();
     }
 
-    private long FactorsOfSet(IEnumerable<long> factors)
+    private long MultiplesOfSet(IEnumerable<long> multiples)
     {
-        List<long> lowestFactors = new();
-        foreach (var factor in factors)
+        List<long> lowestMultiples = new();
+        foreach (var multiple in multiples)
         {
-            lowestFactors.AddRange(factors.Where(f => f != factor).Select(otherFactor => LowestCommonFactor(factor, otherFactor)));
+            lowestMultiples.AddRange(multiples.Where(f => f != multiple).Select(otherMultiple => LowestCommonMultiple(multiple, otherMultiple)));
         }
 
-        var distinctFactors = lowestFactors.Distinct().ToList();
-        if (distinctFactors.Count > 1)
+        var distinctMultiples = lowestMultiples.Distinct().ToList();
+        if (distinctMultiples.Count > 1)
         {
-            return FactorsOfSet(distinctFactors);
+            return MultiplesOfSet(distinctMultiples);
         }
-        else if (distinctFactors.Count == 1)
+        else if (distinctMultiples.Count == 1)
         {
-            return distinctFactors.First();
+            return distinctMultiples.First();
         }
         throw new ArithmeticException("Failed to do maths");
     }
 
-    private long LowestCommonFactor(long a, long b)
+    private long LowestCommonMultiple(long a, long b)
     {
         long higher = Math.Max(a, b);
         long lower = Math.Min(a, b);
@@ -138,12 +138,12 @@ public class Day8 : AdventOfCodeDay
         int lowPow = 1;
         int highPow = 1;
 
-        long factor = 0;
-        while (factor == 0)
+        long multiple = 0;
+        while (multiple == 0)
         {
             if (higher * highPow == lower * lowPow)
             { 
-                factor = (higher*highPow);
+                multiple = (higher*highPow);
             }
             else
             {
@@ -154,6 +154,6 @@ public class Day8 : AdventOfCodeDay
                 }
             }
         }
-        return factor;
+        return multiple;
     }
 }
