@@ -1,6 +1,6 @@
 ﻿using AdventOfCode.Shared.Base;
 
-namespace AdventOfCode.Year2023;
+namespace AdventOfCode.Year2024;
 
 public class Program
 {
