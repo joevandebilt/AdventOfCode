@@ -1,7 +1,7 @@
 ﻿using AdventOfCode.Shared.Base;
 using AdventOfCode.Shared.Enums;
 
-namespace AdventOfCode.Shared.Template;
+namespace AdventOfCode.Year2024.Days.DayTwo;
 public class DayTwoMain : AdventOfCodeDay
 {
     private const bool _debugging = false;
