@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 namespace AdventOfCode.Year2024.Days.DayThree;
 public class DayThreeMain : AdventOfCodeDay
 {
-    private const bool _debugging = true;
+    private const bool _debugging = false;
     public DayThreeMain() : base(Day.Three, _debugging) { }
 
     public override async Task Run()
