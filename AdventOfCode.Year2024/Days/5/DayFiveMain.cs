@@ -4,7 +4,7 @@ using AdventOfCode.Shared.Enums;
 namespace AdventOfCode.Year2024.Days.DayFive;
 public class DayFiveMain : AdventOfCodeDay
 {
-    private const bool _debugging = true;
+    private const bool _debugging = false;
     public DayFiveMain() : base(Day.Five, _debugging) { }
 
     public override async Task Run()
