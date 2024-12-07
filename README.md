@@ -1,6 +1,8 @@
 Advent of Code is an Advent calendar of small programming puzzles for a variety of skill levels that can be solved in any programming language you like. People use them as interview prep, company training, university coursework, practice problems, a speed contest, or to challenge each other.
 
 ## 2024 Results
++ Day 7 Part 1 Result:    2941973819040 (663.6253ms)
++ Day 7 Part 2 Result:    249943041417600 (2234.9024ms)
 + Day 6 Part 1 Result:    5312 (45.1905ms)
 + Day 6 Part 2 Result:    1748 (7967.4294ms)
 + Day 5 Part 1 Result:    5948 (508.8235ms)
