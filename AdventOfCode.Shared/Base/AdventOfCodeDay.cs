@@ -48,7 +48,7 @@ public partial class AdventOfCodeDay
         return Path.Combine(Environment.CurrentDirectory, "Days", _dayOfAdvent.ToString());
     }
 
-    protected async Task<List<string>> LoadFile()
+    protected async Task<List<string>> LoadFile(bool forceLower = true)
     {
         List<string> linesOfInput = new();
         string currentDir = GetCurrentFilePath();
@@ -62,7 +62,7 @@ public partial class AdventOfCodeDay
             string? line = string.Empty;
             while ((line = await reader.ReadLineAsync()) != null)
             {
-                linesOfInput.Add(line.ToLower());
+                linesOfInput.Add(forceLower ? line.ToLower() : line);
             }
         }
         return linesOfInput;

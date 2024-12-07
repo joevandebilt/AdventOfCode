@@ -1,5 +1,6 @@
 ﻿using AdventOfCode.Shared.Base;
 using AdventOfCode.Shared.Enums;
+using AdventOfCode.Shared.Extensions;
 
 namespace AdventOfCode.Year2024.Days.DaySix;
 public class DaySixMain : AdventOfCodeDay
@@ -42,7 +43,7 @@ public class DaySixMain : AdventOfCodeDay
 
                     //Replace the coordinate in the original grid with an obstacle
                     testGrid = linesOfInput.Select(line => line).ToList();
-                    testGrid[i] = ReplaceCharAtIndex(testGrid[i], j, '#');
+                    testGrid[i] = testGrid[i].ReplaceCharAtIndex(j, '#');
 
                     TravelGrid(testGrid, row, col, out loops);
                     if (loops)
@@ -152,10 +153,10 @@ public class DaySixMain : AdventOfCodeDay
                 else
                 {
                     //Move
-                    grid[row] = ReplaceCharAtIndex(grid[row], col, guardIcon);
+                    grid[row] = grid[row].ReplaceCharAtIndex(col, guardIcon);
                     row = nextRowPos;
                     col = nextColPos;
-                    grid[row] = ReplaceCharAtIndex(grid[row], col, guardIcon);
+                    grid[row] = grid[row].ReplaceCharAtIndex(col, guardIcon);
                 }
 
                 //Update the next position
@@ -165,13 +166,6 @@ public class DaySixMain : AdventOfCodeDay
         }
         //PrintGrid(grid);
         return grid;
-    }
-
-    private string ReplaceCharAtIndex(string input, int index, char ch)
-    {
-        char[] characters = input.ToCharArray();
-        characters[index] = ch;
-        return new string(characters);
     }
 
     private string coodinateAsString(int row, int col, char guardIcon)
