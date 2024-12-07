@@ -1,9 +1,7 @@
 ﻿using AdventOfCode.Shared.Base;
 using AdventOfCode.Shared.Enums;
-using AdventOfCode.Year2024.Days._7;
-using System.Reflection.Metadata.Ecma335;
 
-namespace AdventOfCode.Shared.Template;
+namespace AdventOfCode.Year2024.Days.DaySeven;
 public class DaySevenMain : AdventOfCodeDay
 {
     private const bool _debugging = true;
