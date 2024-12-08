@@ -129,7 +129,32 @@ public class DayTenMain : AdventOfCodeDay
             for (col = 0; col < line.Length; col++)
             {
                 char c = line[col];
-                
+                if (mazeCoodinates.Any(coodinate => coodinate.Item1 == row && coodinate.Item2 == col))
+                {
+                    mapLine.Append(c);
+                }
+                else
+                {
+                    var tilesNorth = mazeCoodinates.Count(cood => cood.Item1 < row && cood.Item2 == col);
+                    var tilesEast = mazeCoodinates.Count(cood => cood.Item1 == row && cood.Item2 > col);
+                    var tilesSouth = mazeCoodinates.Count(cood => cood.Item1 > row && cood.Item2 == col);
+                    var tilesWest = mazeCoodinates.Count(cood => cood.Item1 == row && cood.Item2 < col);
+
+                    var validNorth = (tilesNorth > 0) && (tilesNorth % 2 == 1);
+                    var validEast = (tilesEast > 0) && (tilesEast % 2 == 1);
+                    var validSouth = (tilesSouth > 0) && (tilesSouth % 2 == 1);
+                    var validWest = (tilesWest > 0) && (tilesWest % 2 == 1);
+
+                    if (validNorth && validEast && validSouth && validWest)
+                    {
+                        mapLine.Append('I');
+                        nestedTiles++;
+                    }
+                    else
+                    {
+                        mapLine.Append('O');
+                    }
+                }
             }
             map.Add(mapLine.ToString());
         }
