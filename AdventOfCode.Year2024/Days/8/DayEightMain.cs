@@ -7,7 +7,7 @@ namespace AdventOfCode.Year2024.Days.DayEight;
 public class DayEightMain : AdventOfCodeDay
 {
     private const bool _debugging = true;
-    char[] uniqueFrequencies;
+    char[] uniqueFrequencies = null!;
     public DayEightMain() : base(Day.Eight, _debugging) { }
 
     public override async Task Run()
@@ -52,19 +52,72 @@ public class DayEightMain : AdventOfCodeDay
                         {
                             Identifier = frequency,
                             Row = proposedRow,
-                            Column = proposedCol
+                            Column = proposedCol,
+                            RowDirection = rowDirection,
+                            ColDirection = colDirection
                         });
                     }
                 }
             }
         }
-        WriteLine($"There are {Antinodes.Count} antinodes possible on the map");
 
         //Print the maps for the debugger
+        WriteLine($"There are {Antinodes.Count} antinodes possible on the map");
         PrintMaps(linesOfInput, Antinodes, gridMap);
 
-        SetResult1(Antinodes.Select(a => new { a.Row, a.Column }).Distinct().Count());
-        SetResult2(-1);
+        SetResult1(Antinodes.Select(a => new
+        {
+            a.Row,
+            a.Column
+        }).Distinct().Count());
+
+        var originalAntiNodes = Antinodes.Select(a => a).ToList();
+        foreach (AntiNode node in originalAntiNodes)
+        {
+            bool inBounds = true;
+            int row = node.Row;
+            int col = node.Column;
+
+            while (inBounds)
+            {
+                row = row + node.RowDirection;
+                col = col + node.ColDirection;
+
+                if (row >= 0 && row < linesOfInput.Count
+                       && col >= 0 && col < linesOfInput.First().Length)
+                {
+                    if (!Antinodes.Any(a => a.Identifier == node.Identifier
+                            && a.Row == row
+                            && a.Column == col))
+                    {
+                        Antinodes.Add(new AntiNode
+                        {
+                            Identifier = node.Identifier,
+                            Row = row,
+                            Column = col,
+                            RowDirection = node.RowDirection,
+                            ColDirection = node.ColDirection
+                        });
+                    }
+                }
+                else
+                {
+                    inBounds = false;
+                }
+            }
+        }
+
+        //Print the maps for the debugger
+        WriteLine($"There are {Antinodes.Count} harmonic antinodes possible on the map");
+        PrintMaps(linesOfInput, Antinodes, gridMap);
+
+        var combinedList = gridMap.Union(Antinodes.Select(a => (Antenna)a)).Where(c => c.Identifier != '.').ToList();            
+        var uniqueCount = combinedList.Select(a => new
+        {
+            a.Row,
+            a.Column
+        }).Distinct().Count();
+        SetResult2(uniqueCount);
         await base.Run();
     }
 
