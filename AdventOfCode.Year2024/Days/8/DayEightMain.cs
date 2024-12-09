@@ -1,12 +1,11 @@
 ﻿using AdventOfCode.Shared.Base;
 using AdventOfCode.Shared.Enums;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace AdventOfCode.Year2024.Days.DayEight;
 public class DayEightMain : AdventOfCodeDay
 {
-    private const bool _debugging = true;
+    private const bool _debugging = false;
     char[] uniqueFrequencies = null!;
     public DayEightMain() : base(Day.Eight, _debugging) { }
 
