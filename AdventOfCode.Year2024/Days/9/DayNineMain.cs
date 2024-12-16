@@ -10,6 +10,7 @@ public class DayNineMain : AdventOfCodeDay
 
     public override async Task Run()
     {
+        return;
         var linesOfInput = await LoadFile();
         var diskMap = linesOfInput.First();
 
