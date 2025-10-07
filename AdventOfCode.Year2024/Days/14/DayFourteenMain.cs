@@ -4,7 +4,7 @@ using AdventOfCode.Shared.Enums;
 namespace AdventOfCode.Year2024.Days.DayFourteen;
 public class DayFourteen : AdventOfCodeDay
 {
-    private const bool _debugging = true;
+    private const bool _debugging = false;
     public DayFourteen() : base(Day.Fourteen, _debugging) { }
 
     public override async Task Run()
@@ -61,7 +61,6 @@ public class DayFourteen : AdventOfCodeDay
         var safetyCol = width / 2;
         for (int seconds = 0; seconds < timeLimit; seconds++)
         {
-            bool printDisplay = false;
             foreach (var robot in Robots)
             {
                 robot.Position.X += robot.Velocity.X;
@@ -109,17 +108,17 @@ public class DayFourteen : AdventOfCodeDay
 
     private void PrintGrid(int width, int height, List<Robot> Robots)
     {
-        Console.Clear();
+        Clear();
         for (int row = 0; row < height; row++)
         {
             for (int col = 0; col < width; col++)
             {
                 if (Robots.Any(r => r.Position.X == col && r.Position.Y == row))
-                    Console.Write("X");
+                    Write("X");
                 else 
-                    Console.Write(".");
+                    Write(".");
             }
-            Console.Write("\r\n");
+            Write(Environment.NewLine);
         }
     }
 }

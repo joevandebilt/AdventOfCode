@@ -76,4 +76,16 @@ public partial class AdventOfCodeDay
             Console.WriteLine(line);
     }
 
+    protected void Write(string line)
+    {
+        if (_debugMode)
+            Console.Write(line);
+    }
+
+    protected void Clear()
+    {
+        if (_debugMode)
+            Console.Clear();
+    }
+
 }
