@@ -4,7 +4,7 @@ using AdventOfCode.Shared.Enums;
 namespace AdventOfCode.Year2024.Days.DayTwelve;
 public class DayTwelveMain : AdventOfCodeDay
 {
-    private const bool _debugging = true;
+    private const bool _debugging = false;
     public DayTwelveMain() : base(Day.Twelve, _debugging) { }
 
     public override async Task Run()
@@ -47,6 +47,9 @@ public class DayTwelveMain : AdventOfCodeDay
 
                     var surrounding = GetCompassDirections(linesOfInput, nextPoint.Coordinate.Item1, nextPoint.Coordinate.Item2);
                     var fenceNeeded = surrounding.Count(s => !s.Equals(zoneType));
+                    var corners = GetCorners(linesOfInput, nextPoint);
+
+                    region.Corners += corners;
                     region.Perimeter += fenceNeeded;
 
                     nextPoint = Zones.FirstOrDefault(z => z.Identifier == zoneType && region.Zones.Any(rz => IsNeighbour(z, rz)));
@@ -66,7 +69,7 @@ public class DayTwelveMain : AdventOfCodeDay
         WriteLine($"Total Area {Regions.Sum(r => r.Area)}");
 
         SetResult1(Regions.Sum(z => z.Price));
-        SetResult2(-1);
+        SetResult2(Regions.Sum(z => z.Area * z.Corners));
         await base.Run();
     }
 
@@ -95,6 +98,48 @@ public class DayTwelveMain : AdventOfCodeDay
             }
         }
         return new string(characters.ToArray());
+    }
+
+    private int GetCorners(List<string> linesOfInput, GardenZone zone)
+    {
+        int corners = 0;
+
+        for (int x = -1; x <= 1; x = x + 2)
+        {
+            for (int y = -1; y <= 1; y = y + 2)
+            {
+                var curPosX = zone.Coordinate.Item1;
+                var curPosY = zone.Coordinate.Item2;
+
+                char neighbourX, neighbourY, diagonalNeighbour;
+                neighbourX = neighbourY = diagonalNeighbour = '.';
+
+                var checkX = curPosX + x;
+                var checkY = curPosY + y;
+
+                var xSafe = (checkX >= 0 && checkX < linesOfInput.Count);
+                var ySafe = (checkY >= 0 && checkY < linesOfInput[curPosX].Length);
+
+                if (xSafe)
+                    neighbourX = linesOfInput[checkX][curPosY];
+
+                if (ySafe)
+                    neighbourY = linesOfInput[curPosX][checkY];
+
+                if (xSafe && ySafe)
+                    diagonalNeighbour = linesOfInput[checkX][checkY];
+
+                if (neighbourX == zone.Identifier && neighbourY == zone.Identifier && diagonalNeighbour != zone.Identifier)
+                    corners++;  //Concave Corner
+
+                if (neighbourX != zone.Identifier && neighbourY != zone.Identifier && diagonalNeighbour != zone.Identifier)
+                    corners++; //Convex corner
+
+                if (neighbourX != zone.Identifier && neighbourY != zone.Identifier && diagonalNeighbour == zone.Identifier)
+                    corners++; //Convex corners touching
+            }
+        }
+        return corners;
     }
 
     private bool IsNeighbour(GardenZone z1, GardenZone z2)
