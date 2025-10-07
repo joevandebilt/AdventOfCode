@@ -22,7 +22,7 @@ public class Program
         Console.WriteLine("\n\n\t---Results---\n\n");
 
         //Print results
-        tasks.AddRange(assemblies.Select(a => a.PrintResult()));
+        tasks.AddRange(assemblies.OrderBy(a => a.DayOfAdvent).Select(a => a.PrintResult()));
         Task.WaitAll(tasks.ToArray());
     }
 }

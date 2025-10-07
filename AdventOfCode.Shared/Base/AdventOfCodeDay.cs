@@ -13,6 +13,8 @@ public partial class AdventOfCodeDay
     private readonly int _dayOfAdvent;
     private readonly bool _debugMode;
 
+    public int DayOfAdvent => _dayOfAdvent;
+
     public AdventOfCodeDay(Day dayOfAdvent, bool debugMode)
     {
         _dayOfAdvent = (int)dayOfAdvent;
