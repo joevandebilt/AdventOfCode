@@ -1,7 +1,5 @@
 ﻿using AdventOfCode.Shared.Base;
 using AdventOfCode.Shared.Enums;
-using AdventOfCode.Shared.Extensions;
-using System.ComponentModel;
 
 namespace AdventOfCode.Year2024.Days.DayTwelve;
 public class DayTwelveMain : AdventOfCodeDay
@@ -12,41 +10,62 @@ public class DayTwelveMain : AdventOfCodeDay
     public override async Task Run()
     {
         var linesOfInput = await LoadFile(forceLower: false);
-        Dictionary<char, GardenZone> zones = new();
+        List<GardenZone> Zones = new();
+        List<Region> Regions = new();
         for (int row = 0; row < linesOfInput.Count; row++)
         {
             var line = linesOfInput[row];
             for (int col = 0; col < line.Length; col++)
             {
                 var character = line[col];
-                GardenZone zone = null!;
-                if (zones.ContainsKey(character))
-                {
-                    zone = zones[character];
-                    zone.Area++;
-                }
-                else
-                {
-                    zone = new GardenZone
-                    {
-                        Identifier = character,
-                        Area = 1,
-                        Perimeter = 0
-                    };
-                    zones.Add(character, zone);
-                }
 
-                var surrounding = GetCompassDirections(linesOfInput, row, col);
-                var fenceNeeded = surrounding.Count(s => !s.Equals(character));
-                zone.Perimeter += fenceNeeded;
-
-                zones[character] = zone;
+                Zones.Add(new GardenZone
+                {
+                    Identifier = character,
+                    Coordinate = new(row, col)
+                });
             }
         }
 
-        WriteLine(string.Join("\r\n", zones.Select(z => $"{z.Value.Identifier}: {z.Value.Area} x {z.Value.Perimeter} = {z.Value.Price}")));
-        
-        SetResult1(zones.Sum(z => z.Value.Price));
+        var ZoneTypes = Zones.Select(z => z.Identifier).Distinct().ToList();
+        foreach (var zoneType in ZoneTypes)
+        {
+            //Get a region
+            while (Zones.Count(z => z.Identifier == zoneType) > 0)
+            {
+                var region = new Region
+                {
+                    Id = $"{zoneType}_{Regions.Count(r => r.Identifier == zoneType).ToString().PadLeft(2, '0')}",
+                    Identifier = zoneType,
+                };
+
+                var nextPoint = Zones.FirstOrDefault(z => z.Identifier == zoneType);
+                while (nextPoint != null)
+                {
+                    region.Zones.Add(nextPoint);
+                    Zones.Remove(nextPoint);
+
+                    var surrounding = GetCompassDirections(linesOfInput, nextPoint.Coordinate.Item1, nextPoint.Coordinate.Item2);
+                    var fenceNeeded = surrounding.Count(s => !s.Equals(zoneType));
+                    region.Perimeter += fenceNeeded;
+
+                    nextPoint = Zones.FirstOrDefault(z => z.Identifier == zoneType && region.Zones.Any(rz => IsNeighbour(z, rz)));
+                }
+                Regions.Add(region);
+            }
+        }
+
+        foreach (var region in Regions)
+        {
+            WriteLine($"{region.Id}: Region of {region.Identifier} with price {region.Area} x {region.Perimeter} = {region.Price}");
+        }
+
+        //Debug
+        //var region = Regions.FirstOrDefault(r => r.Id == "H_12")
+
+        WriteLine($"Total Area {Regions.Sum(r => r.Area)}");
+
+        SetResult1(Regions.Sum(z => z.Price));
         SetResult2(-1);
         await base.Run();
     }
@@ -76,5 +95,33 @@ public class DayTwelveMain : AdventOfCodeDay
             }
         }
         return new string(characters.ToArray());
+    }
+
+    private bool IsNeighbour(GardenZone z1, GardenZone z2)
+    {
+        return IsNeighbour(z1.Coordinate.Item1, z1.Coordinate.Item2, z2);
+    }
+
+    private bool IsNeighbour(int row, int col, GardenZone zone)
+    {
+        if (zone.Coordinate == null)
+            return false;
+
+        var zoneRow = zone.Coordinate.Item1;
+        var zoneCol = zone.Coordinate.Item2;
+
+        var rowChange = Math.Abs(zoneRow - row);
+        var colChange = Math.Abs(zoneCol - col);
+
+        var up = rowChange == -1 && colChange == 0;
+        var down = rowChange == 1 && colChange == 0;
+        var left = colChange == -1 && rowChange == 0;
+        var right = colChange == 1 && rowChange == 0;
+
+        if ((up || down) && (left || right))
+            return false;
+
+        var neighbour = (up || down || left || right);
+        return neighbour;
     }
 }
