@@ -20,6 +20,8 @@ public partial class AdventOfCodeDay
         _dayOfAdvent = (int)dayOfAdvent;
         _debugMode = debugMode;
         init = DateTime.Now;
+
+        Console.CursorVisible = false;
     }
 
     public virtual async Task Run()
