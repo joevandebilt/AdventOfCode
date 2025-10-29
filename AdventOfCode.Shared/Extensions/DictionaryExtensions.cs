@@ -14,6 +14,5 @@ public static class DictionaryExtensions
             dictionary[key]+=count;
         else
             dictionary.Add(key, count);
-
     }
 }
