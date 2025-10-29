@@ -92,7 +92,6 @@ public class DayFiveMain : AdventOfCodeDay
 
         var output = string.Concat(lanes.Select(lane => lane.Last()));
 
-        Console.WriteLine();
         //SetResult1(0);
         //SetResult2(0);
         await base.Run();
@@ -100,21 +99,21 @@ public class DayFiveMain : AdventOfCodeDay
 
     private void PrintLanes(List<char>[] lanes)
     {
-        Console.Clear();
+        Clear();
         int maxHeight = lanes.Max(l => l.Count);
         for (int row = maxHeight - 1; row >= 0; row--)
         {
             for (int lane = 0; lane < lanes.Length; lane++)
             {
-                Console.Write(' ');
+                Write(" ");
                 if (lanes[lane].Count < row + 1)
-                    Console.Write("   ");
+                    Write("   ");
                 else
-                    Console.Write($"[{lanes[lane][row]}]");
+                    Write($"[{lanes[lane][row]}]");
             }
-            Console.Write(Environment.NewLine);
+            Write(Environment.NewLine);
         }
         var cols = Enumerable.Range(1, lanes.Length);
-        Console.WriteLine($"  {string.Join("   ", cols)} ");
+        WriteLine($"  {string.Join("   ", cols)} ");
     }
 }
