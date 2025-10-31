@@ -89,5 +89,10 @@ public partial class AdventOfCodeDay
         if (_debugMode)
             Console.Clear();
     }
+    protected void ResetCursor()
+    {
+        if (_debugMode)
+            Console.SetCursorPosition(0,0);
+    }
 
 }

@@ -29,6 +29,8 @@ Advent of Code is an Advent calendar of small programming puzzles for a variety 
 + Day 13 Part 2 Result:   101726882250942 (928.4565ms)
 + Day 14 Part 1 Result:   217132650 (806.842ms)
 + Day 14 Part 2 Result:   6516 (4131.5608ms)
++ Day 15 Part 1 Result:   1360570 (1438.5929ms)
++ Day 15 Part 2 Result:   1381446 (4928.2401ms)
 
 ## 2023 Results
 + Day 1 Part 1 Result:    55172 (551.1575ms)
