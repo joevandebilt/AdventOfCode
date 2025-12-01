@@ -20,15 +20,11 @@ public class DayOneMain : AdventOfCodeDay
         foreach (var line in linesOfInput)
         {
             //Process each line here
-            int invert = 1;
-            if (line.StartsWith('l'))
-                invert = -1;
-
+            int invert = line.StartsWith('l') ? -1 : 1;
             var numberPart = int.Parse(line[1..]);
-            clicks += numberPart / 100;
+            var shift = numberPart % 10;
             
-            var shift = numberPart % 100;
-
+            clicks += numberPart / 100;
             dialShown += shift * invert;
             
             if (dialShown == 0 || dialShown == 100)
