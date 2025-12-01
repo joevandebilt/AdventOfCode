@@ -31,13 +31,7 @@ public class DayOneMain : AdventOfCodeDay
 
             dialShown += shift * invert;
             
-            if (dialShown == 0)
-            {
-                hits++;
-                clicks++;
-                freeMove = true;
-            }
-            else if (dialShown == 100)
+            if (dialShown == 0 || dialShown == 100)
             {
                 hits++;
                 clicks++;
@@ -65,7 +59,7 @@ public class DayOneMain : AdventOfCodeDay
                 freeMove = false;
             }
 
-                WriteLine($"{line} -> {dialShown}");
+            WriteLine($"{line} -> {dialShown}");
         }
 
 
