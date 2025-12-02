@@ -2,10 +2,10 @@
 using AdventOfCode.Shared.Enums;
 using System.Numerics;
 
-namespace AdventOfCode.Shared.Template;
+namespace AdventOfCode.Year2025.Days.DayOne;
 public class DayOneMain : AdventOfCodeDay
 {
-    private const bool _debugging = true;
+    private const bool _debugging = false;
     public DayOneMain() : base(Day.One, _debugging) { }
 
     public override async Task Run()
