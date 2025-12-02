@@ -38,29 +38,33 @@ public class DayTwoMain : AdventOfCodeDay
         List<long> repeatingHalves = new();
         List<long> repeatingSequence = new();
 
-        //An invalid Id must repeat itself so must start at twice it's length
-        for (long i = start; i <= end; i++)
+        for (long id = start; id <= end; id++)
         {
-            var idString = i.ToString();
+            var idString = id.ToString();
             var half = idString.Length / 2;
 
-            for (int j = 1; j <= half; j++)
+            for (int chunk = 1; chunk <= half; chunk++)
             {
-                if (idString.Length % j != 0)
-                    continue;
-
-                var chunks = idString.Chunk(j).Select(x => new string(x)).ToList();
-                var uniqueEntries = chunks.Distinct().ToList();
-                if (uniqueEntries.Count == 1)
+                //Only consider chunk sizes that evenly divide the string length
+                if (idString.Length % chunk == 0)
                 {
-                    if (!repeatingSequence.Contains(i))
-                        repeatingSequence.Add(i);                    
-                    
-                    if (j == half && idString.Length % 2 == 0)
-                        repeatingHalves.Add(i);
+                    //Split the string into chunks of the current size and get the unique entries
+                    var chunks = idString.Chunk(chunk).Select(x => new string(x)).ToList();
+                    var uniqueEntries = chunks.Distinct().ToList();
+
+                    //Pattern is repeating if the number of unique entries is 1
+                    if (uniqueEntries.Count == 1)
+                    {
+                        //Ensure we aren't recapturing one we already have, for example 2222 is 2-2-2-2 and 22-22
+                        if (!repeatingSequence.Contains(id))
+                            repeatingSequence.Add(id);
+
+                        //If the chunk size is exactly half the string length, we have a repeating half
+                        if (chunk == half && idString.Length % 2 == 0)
+                            repeatingHalves.Add(id);
+                    }
                 }
             }
-
         }
 
         return (repeatingHalves, repeatingSequence);
