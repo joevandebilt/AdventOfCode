@@ -1,15 +1,12 @@
 ﻿using AdventOfCode.Shared.Base;
 using AdventOfCode.Shared.Enums;
 using AdventOfCode.Shared.Extensions;
-using AdventOfCode.Year2023.Days._10;
-using System.Data.Common;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace AdventOfCode.Year2023.Days.DayTen;
 public class DayTenMain : AdventOfCodeDay
 {
-    private const bool _debugging = true;
+    private const bool _debugging = false;
     public DayTenMain() : base(Day.Ten, _debugging) { }
 
     private List<Tile> _tileDictionary = new()
@@ -91,14 +88,6 @@ public class DayTenMain : AdventOfCodeDay
             }
             else
             {
-                //double distanceFromStart = Math.Sqrt(Math.Pow(Math.Abs(startRow - row), 2) + Math.Pow(Math.Abs(startCol - col), 2));
-                //if (distanceFromStart > maxDistanceFromStart)
-                //{
-                //    //This is further from home I've ever been
-                //    maxDistanceFromStart = distanceFromStart;
-                //    stepsToMaxDistance = stepsTaken;
-                //}
-
                 var nextTile = _tileDictionary.Single(td => td.Identifier == linesOfInput[row][col]);
                 if (nextTile.DirectionOne == inverseDirection(directionOfTravel))
                 {

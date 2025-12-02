@@ -26,7 +26,7 @@ public partial class AdventOfCodeDay
 
     public virtual async Task Run()
     {
-        Console.WriteLine($"Day {_dayOfAdvent} Completed");
+        WriteLine($"Day {_dayOfAdvent} Completed");
         await Task.CompletedTask;
     }
     public async Task PrintResult()

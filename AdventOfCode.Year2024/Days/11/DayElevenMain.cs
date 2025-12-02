@@ -5,7 +5,7 @@ using AdventOfCode.Shared.Extensions;
 namespace AdventOfCode.Year2024.Days.DayEleven;
 public class DayElevenMain : AdventOfCodeDay
 {
-    private const bool _debugging = true;
+    private const bool _debugging = false;
 
     public DayElevenMain() : base(Day.Eleven, _debugging) { }
 

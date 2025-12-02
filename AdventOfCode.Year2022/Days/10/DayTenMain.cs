@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 namespace AdventOfCode.Year2022.Days.DayTen;
 public class DayTenMain : AdventOfCodeDay
 {
-    private const bool _debugging = true;
+    private const bool _debugging = false;
     public DayTenMain() : base(Day.Ten, _debugging) { }
 
     public override async Task Run()
