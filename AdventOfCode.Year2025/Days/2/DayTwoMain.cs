@@ -6,7 +6,7 @@ namespace AdventOfCode.Year2025.Days.DayTwo;
 
 public class DayTwoMain : AdventOfCodeDay
 {
-    private const bool _debugging = true;
+    private const bool _debugging = false;
     public DayTwoMain() : base(Day.Two, _debugging) { }
 
     public override async Task Run()
