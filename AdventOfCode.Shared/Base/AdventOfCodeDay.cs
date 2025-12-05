@@ -1,6 +1,7 @@
 ﻿using AdventOfCode.Shared.Enums;
 
 namespace AdventOfCode.Shared.Base;
+
 public partial class AdventOfCodeDay
 {
     private DateTime init;
@@ -87,12 +88,16 @@ public partial class AdventOfCodeDay
     protected void Clear()
     {
         if (_debugMode)
+        {
             Console.Clear();
+            Console.WriteLine("\x1b[3J");
+            Console.Clear();
+        }
     }
     protected void ResetCursor()
     {
         if (_debugMode)
-            Console.SetCursorPosition(0,0);
+            Console.SetCursorPosition(0, 0);
     }
 
 }

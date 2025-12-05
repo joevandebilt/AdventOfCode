@@ -16,6 +16,7 @@ public class DayFourMain : AdventOfCodeDay
 
         while (changes > 0)
         {
+            PrintGrid(linesOfInput);
             var freeBoxes = TraverseGrid(linesOfInput);
             changes = freeBoxes.Count;
             foreach (var box in freeBoxes)
@@ -37,6 +38,15 @@ public class DayFourMain : AdventOfCodeDay
         }
         SetResult2(coordinates.Count);
         await base.Run();
+    }
+
+    private void PrintGrid(List<string> linesOfInput)
+    {
+        Clear();
+        foreach (var line in linesOfInput)
+        {
+            WriteLine(line);
+        }
     }
 
     private List<Coordinate> TraverseGrid(IList<string> linesOfInput)
