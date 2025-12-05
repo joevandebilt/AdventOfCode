@@ -11,7 +11,6 @@ public class DayFourMain : AdventOfCodeDay
     public override async Task Run()
     {
         var linesOfInput = await LoadFile();
-        List<Coordinate> pass1 = new();
         List<Coordinate> coordinates = new();
         int changes = int.MaxValue;
 
@@ -28,14 +27,14 @@ public class DayFourMain : AdventOfCodeDay
                 line = new string(chars);
                 linesOfInput[box.Row] = line;
             }
-            coordinates.AddRange(freeBoxes);
-            if (pass1.Count == 0)
+         
+            if (coordinates.Count == 0)
             {
-                pass1.AddRange(freeBoxes);
+                SetResult1(freeBoxes.Count);
             }
+            coordinates.AddRange(freeBoxes);
+            
         }
-
-        SetResult1(pass1.Count);
         SetResult2(coordinates.Count);
         await base.Run();
     }
