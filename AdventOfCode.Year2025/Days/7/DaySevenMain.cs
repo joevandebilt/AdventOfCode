@@ -8,8 +8,6 @@ public class DaySevenMain : AdventOfCodeDay
     private const bool _debugging = false;
     public DaySevenMain() : base(Day.Seven, _debugging) { }
 
-    private long timelines = 1;
-
     public override async Task Run()
     {
         var linesOfInput = await LoadFile();
