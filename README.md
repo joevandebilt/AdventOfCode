@@ -11,6 +11,10 @@ Advent of Code is an Advent calendar of small programming puzzles for a variety 
 + Day 4 Part 2 Result:    9122 (119.0581ms)
 + Day 5 Part 1 Result:    517 (77.4594ms)
 + Day 5 Part 2 Result:    336173027056994 (79.4882ms)
++ Day 6 Part 1 Result:    8108520669952 (60.7787ms)
++ Day 6 Part 2 Result:    11708563470209 (60.7975ms)
++ Day 7 Part 1 Result:    1592 (813.9618ms)
++ Day 7 Part 2 Result:    17921968177009 (814.3229ms)
 
 ## 2024 Results
 + Day 1 Part 1 Result:    1579939 (797.9507ms)
