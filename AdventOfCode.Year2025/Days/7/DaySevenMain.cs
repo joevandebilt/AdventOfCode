@@ -1,6 +1,5 @@
 ﻿using AdventOfCode.Shared.Base;
 using AdventOfCode.Shared.Enums;
-using AdventOfCode.Year2025.Days._7;
 
 namespace AdventOfCode.Year2025.Days.DaySeven;
 public class DaySevenMain : AdventOfCodeDay
