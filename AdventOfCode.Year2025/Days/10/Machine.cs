@@ -48,10 +48,11 @@ public record Machine
     public List<Button> Buttons { get; set; } = new();
     public List<int> Requirements { get; set; } = new();
     public List<int> ButtonsPressed { get; set; } = new();
-    public int PressedCount => ButtonsPressed.Count;
+    public int PressedCount => ButtonsPressed.Count == 0 ? int.MaxValue : ButtonsPressed.Count;
 
     public bool Safe => Requirements.All(req => req >= 0);
-    public bool Ready => IndicatorLights.All(lights => lights == false); //&& Requirements.All(req => req == 0);
+    public bool LightsResolved => IndicatorLights.All(light => light == false);
+    public bool Ready => IndicatorLights.All(light => light == false) && Requirements.All(req => req == 0);
 
     public void PushButton(int idx)
     {

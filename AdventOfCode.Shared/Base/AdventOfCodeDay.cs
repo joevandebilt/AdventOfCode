@@ -14,6 +14,8 @@ public partial class AdventOfCodeDay
     private readonly int _dayOfAdvent;
     private readonly bool _debugMode;
 
+    private char loadingChar = '|';
+
     public int DayOfAdvent => _dayOfAdvent;
 
     public AdventOfCodeDay(Day dayOfAdvent, bool debugMode)
@@ -98,6 +100,41 @@ public partial class AdventOfCodeDay
     {
         if (_debugMode)
             Console.SetCursorPosition(0, 0);
+    }
+
+    protected void Update(string input)
+    {
+        if (_debugMode)
+        {
+            var (left, top) = Console.GetCursorPosition();
+            loadingChar = loadingChar switch
+            {
+                '|' => '/',
+                '/' => '-',
+                '-' => '\\',
+                '\\' => '|',
+                _ => '|'
+            };
+
+            Console.SetCursorPosition(0, top);
+            Console.Write($"{loadingChar} {input}");
+        }
+    }
+
+    protected void WriteLinePlus(int plus, string line)
+    {
+        if (_debugMode)
+        {
+            var (left, top) = Console.GetCursorPosition();
+            var bufferHeight = top + plus;
+
+            if (bufferHeight + 1 > Console.BufferHeight)
+                Console.BufferHeight = bufferHeight + 1;
+
+            Console.SetCursorPosition(0, bufferHeight);
+            Console.WriteLine(line);
+            Console.SetCursorPosition(left, top);
+        }
     }
 
 }
