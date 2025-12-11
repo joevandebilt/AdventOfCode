@@ -59,7 +59,6 @@ public class DayNineMain : AdventOfCodeDay
             }
         }
 
-        DrawGrid(coordinates);
         Rectangle? validRectangle = null;
         while (validRectangle == null)
         {
@@ -76,36 +75,5 @@ public class DayNineMain : AdventOfCodeDay
         WriteLine($"Best valid rectangle is {validRectangle.P1.Reference}x{validRectangle.P2.Reference} with area {validRectangle.Area}");
         SetResult2(validRectangle.Area);
         await base.Run();
-    }
-
-    private void DrawGrid(List<Tile> coordinates)
-    {
-        if (_debugging)
-        {
-            ResetCursor();
-            var minX = coordinates.Min(r => r.X);
-            var maxX = coordinates.Max(r => r.X);
-            var minY = coordinates.Min(r => r.Y);
-            var maxY = coordinates.Max(r => r.Y);
-            for (int x = minX; x <= maxX; x++)
-            {
-                for (int y = minY; y <= maxY; y++)
-                {
-                    var tile = coordinates.FirstOrDefault(r => r.X == x && r.Y == y);
-                    if (tile != null)
-                    {
-                        if (tile.TileColour == TileColour.Red)
-                            Write("#");
-                        else
-                            Write("X");
-                    }
-                    else
-                    {
-                        Write(".");
-                    }
-                }
-                WriteLine("");
-            }
-        }
     }
 }
