@@ -3,8 +3,9 @@
 public record Machine
 {
     public Machine() { }
-    public Machine(string input)
+    public Machine(int id, string input)
     {
+        this.Id = id;
         var parts = input.Split(' ');
         foreach(var part in parts)
         {
@@ -44,11 +45,13 @@ public record Machine
         }
     }
     
+    public int Id { get; set; }
     public List<bool> IndicatorLights { get; set; } = new();
     public List<Button> Buttons { get; set; } = new();
     public List<int> Requirements { get; set; } = new();
     public List<int> ButtonsPressed { get; set; } = new();
     public int PressedCount => ButtonsPressed.Count == 0 ? int.MaxValue : ButtonsPressed.Count;
+    public string Key => $"{this.Id}_{string.Join("_", ButtonsPressed.OrderBy(b => b))}";
 
     public bool Safe => Requirements.All(req => req >= 0);
     public bool LightsResolved => IndicatorLights.All(light => light == false);
@@ -69,6 +72,7 @@ public record Machine
     {
         var newMachine = new Machine
         {
+            Id = Id,
             IndicatorLights = new List<bool>(IndicatorLights),
             Buttons = Buttons.Select(b => new Button { Wires = new List<int>(b.Wires) }).ToList(),
             Requirements = new List<int>(Requirements),
@@ -81,4 +85,9 @@ public record Machine
 public record Button
 {
     public List<int> Wires { get; set; } = new();
+
+    public override string ToString()
+    {
+        return $"({string.Join(",", Wires)})";
+    }
 }
