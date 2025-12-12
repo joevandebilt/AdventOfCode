@@ -1,7 +1,6 @@
 ﻿using AdventOfCode.Shared.Base;
 using AdventOfCode.Shared.Enums;
-using AdventOfCode.Year2025.Days.Day10;
-using AdventOfCode.Year2025.Days.Day10.Solver;
+using AdventOfCode.Year2025.Days.DayTen.Solver;
 using System.Data;
 
 namespace AdventOfCode.Year2025.Days.DayTen;
@@ -38,8 +37,7 @@ public class DayTenMain : AdventOfCodeDay
         foreach (var machine in machines)
         {
             WriteLine($"Doing Joltage Solving Machine {machine.Id + 1}/{machines.Count} [{Convert.ToString(machine.TargetLights, 2).PadLeft(machine.LightsCount, '0')}]");
-            var solver = new BifurcateSolver(machine);
-            var presses = solver.Solve(machine.Requirements);
+            var presses = ILPSolverBranchAndBound.SolveMachine(machine);
             if (presses >= 0)
             {
                 WriteLine($"\tSolved in {presses} presses");

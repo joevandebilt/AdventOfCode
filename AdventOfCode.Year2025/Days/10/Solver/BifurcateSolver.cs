@@ -1,7 +1,6 @@
 ﻿using AdventOfCode.Year2025.Days.DayTen;
-using System.ComponentModel.DataAnnotations;
 
-namespace AdventOfCode.Year2025.Days.Day10.Solver;
+namespace AdventOfCode.Year2025.Days.DayTen.Solver;
 
 public class BifurcateSolver
 {

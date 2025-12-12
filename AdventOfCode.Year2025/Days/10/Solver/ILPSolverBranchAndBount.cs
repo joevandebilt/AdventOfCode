@@ -1,4 +1,6 @@
 ﻿
+using System.Data;
+
 namespace AdventOfCode.Year2025.Days.DayTen.Solver;
 
 public static class ILPSolverBranchAndBound

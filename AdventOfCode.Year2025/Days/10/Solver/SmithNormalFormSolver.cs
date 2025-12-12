@@ -1,6 +1,6 @@
 ﻿using AdventOfCode.Year2025.Days.DayTen;
 
-namespace AdventOfCode.Year2025.Days.Day10;
+namespace AdventOfCode.Year2025.Days.DayTen;
 
 public static class SmithNormalFormSolver
 {
