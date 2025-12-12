@@ -121,6 +121,16 @@ public partial class AdventOfCodeDay
         }
     }
 
+    protected void Complete(string input = "Task Complete")
+    {
+        if (_debugMode)
+        {
+            var (left, top) = Console.GetCursorPosition();
+            Console.SetCursorPosition(0, top);
+            Console.WriteLine($"* {input}");
+        }
+    }
+
     protected void WriteLinePlus(int plus, string line)
     {
         if (_debugMode)

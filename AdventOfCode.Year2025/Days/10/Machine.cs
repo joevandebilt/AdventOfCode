@@ -1,93 +1,67 @@
-﻿namespace AdventOfCode.Year2025.Days.DayTen;
+﻿using AdventOfCode.Shared.Extensions;
+
+namespace AdventOfCode.Year2025.Days.DayTen;
 
 public record Machine
+
 {
     public Machine() { }
     public Machine(int id, string input)
     {
         this.Id = id;
         var parts = input.Split(' ');
-        foreach(var part in parts)
+        foreach (var part in parts)
         {
             if (part.StartsWith('['))
             {
                 var lights = part.Trim('[', ']');
-                foreach (var light in lights)
+                LightsCount = lights.Length;
+
+                long bitmask = 0;
+                foreach (char c in lights)
                 {
-                    if (light == '#')
+                    bitmask <<= 1; // shift left to make room for next bit
+                    if (c == '#')
                     {
-                        IndicatorLights.Add(true);
+                        bitmask |= 1; // set lowest bit to 1
                     }
-                    else
-                    {
-                        IndicatorLights.Add(false);
-                    }                    
                 }
+                TargetLights = bitmask;
             }
             else if (part.StartsWith('('))
             {
-                var buttons = part.Trim('(', ')').Split(',');
-                var button = new Button();
-                foreach (var btn in buttons)
-                {                    
-                    button.Wires.Add(int.Parse(btn));
+                var numLights = this.LightsCount;
+
+                long mask = 0;
+                var idxs = part.Trim('(', ')').Split(',').Select(p => int.Parse(p)).ToList();
+                foreach (var idx in idxs)
+                {
+                    mask |= 1L << (numLights - 1 - idx);
                 }
-                Buttons.Add(button);
+                Buttons.Add(mask);
             }
             else if (part.StartsWith('{'))
             {
                 var requirements = part.Trim('{', '}').Split(',');
-                foreach (var req in requirements)
-                {
-                    Requirements.Add(int.Parse(req));
-                }
+                Requirements = requirements.Select(r => int.Parse(r)).ToArray();
             }
         }
     }
-    
-    public int Id { get; set; }
-    public List<bool> IndicatorLights { get; set; } = new();
-    public List<Button> Buttons { get; set; } = new();
-    public List<int> Requirements { get; set; } = new();
-    public List<int> ButtonsPressed { get; set; } = new();
-    public int PressedCount => ButtonsPressed.Count == 0 ? int.MaxValue : ButtonsPressed.Count;
-    public string Key => $"{this.Id}_{string.Join("_", ButtonsPressed.OrderBy(b => b))}";
 
-    public bool Safe => Requirements.All(req => req >= 0);
-    public bool LightsResolved => IndicatorLights.All(light => light == false);
-    public bool Ready => IndicatorLights.All(light => light == false) && Requirements.All(req => req == 0);
+    public int Id { get; init; }
 
-    public void PushButton(int idx)
-    {
-        var schematic = Buttons[idx];
-        foreach (var lightIdx in schematic.Wires)
-        {
-            IndicatorLights[lightIdx] = !IndicatorLights[lightIdx];
-            Requirements[lightIdx]--;
-        }
-        ButtonsPressed.Add(idx);
-    }
+    public int LightsCount { get; set; }
 
-    public Machine Copy()
-    {
-        var newMachine = new Machine
-        {
-            Id = Id,
-            IndicatorLights = new List<bool>(IndicatorLights),
-            Buttons = Buttons.Select(b => new Button { Wires = new List<int>(b.Wires) }).ToList(),
-            Requirements = new List<int>(Requirements),
-            ButtonsPressed = new List<int>(ButtonsPressed)
-        };
-        return newMachine;
-    }
-} 
+    public long TargetLights { get; init; }
 
-public record Button
-{
-    public List<int> Wires { get; set; } = new();
+    public long Joltage { get; set; }
 
-    public override string ToString()
-    {
-        return $"({string.Join(",", Wires)})";
-    }
+    public List<long> Buttons { get; set; } = new();
+    public List<(long mask, int[] voltages)> ButtonVoltages => Buttons.Select(b => (b, b.ToBitmask(LightsCount))).ToList();
+
+    public List<int[]> ButtonEffects => Buttons.Select(b => b.ToBitmask(LightsCount)).ToList();
+
+    public int[] Requirements { get; init; }
+    public int[] RequirementsParity => Requirements.ToArray().ToParityArray();
+
 }
