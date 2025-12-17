@@ -40,4 +40,53 @@ public static class ArrayExtensions
     {
         return IsMultiple(target, candidate, out int _);
     }
+
+    public static T[] CloneArray<T>(this T[] matrix)
+    {
+        var clone = new T[matrix.Length];
+        Array.Copy(matrix, clone, matrix.Length);
+        return clone;
+    }
+
+    public static T[,] CloneArray<T>(this T[,] matrix)
+    {
+        var clone = new T[matrix.GetLength(0), matrix.GetLength(1)];
+        Array.Copy(matrix, clone, matrix.Length);
+        return clone;
+    }
+
+    public static T[,] Rotate90Clockwise<T>(this T[,] matrix)
+    {
+        int n = matrix.GetLength(0);
+
+        // Step 1: Transpose the matrix
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i + 1; j < n; j++)
+            {
+                T temp = matrix[i, j];
+                matrix[i, j] = matrix[j, i];
+                matrix[j, i] = temp;
+            }
+        }
+
+        // Step 2: Reverse each row
+        for (int i = 0; i < n; i++)
+        {
+            int left = 0;
+            int right = n - 1;
+
+            while (left < right)
+            {
+                T temp = matrix[i, left];
+                matrix[i, left] = matrix[i, right];
+                matrix[i, right] = temp;
+
+                left++;
+                right--;
+            }
+        }
+
+        return matrix;
+    }
 }

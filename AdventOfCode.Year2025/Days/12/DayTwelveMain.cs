@@ -1,7 +1,9 @@
 ﻿using AdventOfCode.Shared.Base;
 using AdventOfCode.Shared.Enums;
+using AdventOfCode.Shared.Extensions;
 
 namespace AdventOfCode.Year2025.Days.DayTwelve;
+
 public class DayTwelveMain : AdventOfCodeDay
 {
     private const bool _debugging = true;
@@ -10,11 +12,61 @@ public class DayTwelveMain : AdventOfCodeDay
     public override async Task Run()
     {
         var linesOfInput = await LoadFile();
-        var (shapes, regions) = ParseInput(linesOfInput);        
+        var (shapes, regions) = ParseInput(linesOfInput);
 
-        SetResult1(-1);
+        int validRegions = 0;
+        foreach (var region in regions)
+        {
+            if (ValidGrid(region, shapes))
+                validRegions++;
+
+            Clear();
+        }
+
+        SetResult1(validRegions);
         SetResult2(-1);
         await base.Run();
+    }
+
+    private bool ValidGrid(Region region, List<Shape> shapes)
+    {
+        var shapesRequired = region.Requirements.Select((qty, idx) => new { Shape = shapes.Single(s => s.Id == idx), Quantity = qty}).OrderByDescending(o => o.Shape.Size).ToList();
+        var nextRequirement = shapesRequired.FirstOrDefault(s => s.Quantity > 0);
+        if (nextRequirement == null)
+        {
+            //No more shapes to fille
+            return true;
+        }
+
+        var nextShape = nextRequirement.Shape;
+
+        var shapePattern = nextShape.Pattern;
+        for (int rotate = 0; rotate < 4; rotate++)
+        {
+            shapePattern = shapePattern.Rotate90Clockwise();
+            PrintShape(shapePattern);
+
+            for (int y = 0; y <= region.Height - shapePattern.GetLength(0); y++)
+            {
+                for (int x = 0; x <= region.Width - shapePattern.GetLength(1); x++)
+                {
+                    var workingRegion = region.Clone();
+
+                    if (workingRegion.TryApplyShape(shapePattern, x, y))
+                    {
+                        PrintRegion(workingRegion);
+
+                        //Shape places, decrement amount needed and recurse
+                        workingRegion.Requirements[nextShape.Id]--;
+
+                        var valid = ValidGrid(workingRegion, shapes);
+                        if (valid)
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private (List<Shape>, List<Region>) ParseInput(List<string> linesOfInput)
@@ -30,16 +82,23 @@ public class DayTwelveMain : AdventOfCodeDay
                 var id = int.Parse(line.Trim(':'));
                 line = linesOfInput[++i];
 
-                List<bool[]> shapeLines = new();
-                while (!string.IsNullOrWhiteSpace(line))
+                int n = line.Length;
+                var pattern = new bool[n, n];
+
+                for (int row = 0; row < n; row++)
                 {
-                    shapeLines.Add(line.Select(l => l == '#').ToArray());
-                    line = linesOfInput[++i];
+                    line = linesOfInput[row + i];
+                    for (int y = 0; y < n; y++)
+                    {
+                        pattern[row, y] = (line[y] == '#');
+                    }
                 }
+                i = i + n;
+
                 shapes.Add(new Shape
                 {
                     Id = id,
-                    Pattern = shapeLines.ToArray()
+                    Pattern = pattern
                 });
             }
             else if (line.Contains(":") && line.Contains("x"))
@@ -51,17 +110,57 @@ public class DayTwelveMain : AdventOfCodeDay
                 var height = int.Parse(dimensions[1]);
 
                 var requirement = regionInfo.Last().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                var shapeRequirments = requirement.Select((r, idx) => new { r, idx }).ToDictionary(x => x.idx, x => int.Parse(x.r));
+                var shapeRequirments = requirement.Select(r => int.Parse(r)).ToArray();
 
                 regions.Add(new Region
                 {
                     Id = i,
                     Width = width,
                     Height = height,
-                    Requirements = shapeRequirments
+                    Requirements = shapeRequirments,
+                    Grid = new bool[height, width]
                 });
             }
         }
         return (shapes, regions);
+    }
+
+    private void PrintRegion(Region region)
+    {
+        ResetCursor();
+
+        int rows = region.Grid.GetLength(0);
+        int cols = region.Grid.GetLength(1);
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Write(region.Grid[i, j] ? "█" : ".");
+            }
+            Write(Environment.NewLine);
+        }
+
+        Write(Environment.NewLine);
+
+        WriteLine($"{string.Join("\t", region.Requirements.Select((qty, idx) => $"Shape {idx} x {qty}"))}");
+    }
+
+
+    private void PrintShape(bool[,] shapePattern)
+    {
+        WriteLine("Testing Shape:\r\n");
+
+        int rows = shapePattern.GetLength(0);
+        int cols = shapePattern.GetLength(1);
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Write(shapePattern[i, j] ? "█" : ".");
+            }
+            Write(Environment.NewLine);
+        }
     }
 }

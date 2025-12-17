@@ -102,6 +102,14 @@ public partial class AdventOfCodeDay
             Console.SetCursorPosition(0, 0);
     }
 
+    protected void SetCursor(int left, int top)
+    {
+        if (_debugMode)
+            Console.SetCursorPosition(left, top);
+    }
+
+    protected (int left, int top) GetCursor() => Console.GetCursorPosition();
+
     protected void Update(string input)
     {
         if (_debugMode)
