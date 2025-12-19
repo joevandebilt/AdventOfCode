@@ -8,6 +8,8 @@ public class Region
     public int Width { get; set; }
     public int Height { get; set; }
     public int Tiles => Width * Height;
+    public int FreeTiles => Grid.Cast<bool>().Count(x => !x);
+
     public int[] Requirements { get; set; } = null!;
 
     public bool[,] Grid { get; set; }

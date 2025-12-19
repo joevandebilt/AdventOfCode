@@ -6,7 +6,7 @@ public class Shape
     public int Id { get; set; }
     public bool[,] Pattern { get; set; }
     public int Size => Pattern.Length;
-
+    public int TilesNeedes => Pattern.Cast<bool>().Count(x => x);
     public int Height => Pattern.GetLength(0);
 
     public int Width => Pattern.GetLength(1);
