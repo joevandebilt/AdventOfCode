@@ -75,6 +75,13 @@ public partial class AdventOfCodeDay
         return linesOfInput;
     }
 
+    public virtual bool Validate()
+    {
+        string currentDir = GetCurrentFilePath();
+        string inputPath = Path.Combine(currentDir, "Input.txt");
+        return File.Exists(inputPath);
+    }
+
     protected void WriteLine(string line)
     {
         if (_debugMode)
